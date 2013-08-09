@@ -38,7 +38,7 @@ class WikiLinks < String
   def to_html
     # ~single~ or multiple~words are links.
     gsub(/(\b~?(?:\w+~)+\w+~?\b|\B~\w+~\B)/) {
-      %Q{<a href="#{$&.delete('~').downcase}">#{$&.tr('~', ' ').strip}</a>}
+      %Q{<a href="#{$&.delete('~').downcase}.html">#{$&.tr('~', ' ').strip}</a>}
     }
   end
 end
@@ -56,13 +56,13 @@ recent = ENTRIES.first(10)
 Entry["index"][:recent] = recent
 
 ENTRIES.each { |entry|
-  dep "html/#{entry[:id]}", entry[:file], "template/page.ht" do |dst|
+  dep "html/#{entry[:id]}.html", entry[:file], "template/page.ht" do |dst|
     File.write(dst, template("template/page.ht", entry))
   end
 }
 File.write("html/index.html", template("template/page.ht", Entry["index"]))
 File.write("html/index.atom", template("template/atom.ht",
                                        :entries => recent, :time => Time.now))
-File.write("html/all", template("template/all.ht", ENTRIES))
+File.write("html/all.html", template("template/all.ht", ENTRIES))
 
 system "rsync -r data/ html"

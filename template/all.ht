@@ -28,7 +28,7 @@
 All pages:
 <ul>
 $ sort_by { |e| e[:title].downcase }.each { |e|
-  <li><a href="${e[:id]}">${e[:title]}</a> [${e[:id]}]</li>
+  <li><a href="${e[:id]}.html">${e[:title]}</a> [${e[:id]}]</li>
 $ }
 </ul>
 </div>
