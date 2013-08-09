@@ -22,10 +22,10 @@ end
 
 def parse(f)
   head, body = File.read(f).split("\n\n", 2)  rescue (return nil)
-  entry = {:body => body, :id => File.basename(f, ".page"), :file => f}
-  head.scan(/(\w+): *(.*)/) { entry[$1.downcase.to_sym] = $2 }
-  entry[:date] = entry[:date] ? Time.parse(entry[:date]) : File.mtime(f)
-  entry[:updated] = entry[:updated] ? Time.parse(entry[:updated]) : File.mtime(f)
+  entry      = {:body => body, :id => File.basename(f, ".page"), :file => f}
+  entry[:title]     = head.scan(/(\w+): *(.*)/) { entry[$1.downcase.to_sym] = $2 }
+  entry[:date]      = entry[:date] ? Time.parse(entry[:date]) : File.mtime(f)
+  entry[:updated]   = entry[:updated] ? Time.parse(entry[:updated]) : File.mtime(f)
   entry
 end
 
